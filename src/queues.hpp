@@ -37,15 +37,12 @@ class VLQueue : public Queue<T> {
 
 public:
 	VLQueue() : fd(mkvl()) {
-		std::cout << "newq=" << fd << std::endl;
 		assert(!open_byte_vl_as_producer(fd, &prodA, 1));
-		std::cout << "init prodA " << (void*)prodA.pcacheline << ", " << prodA.fd << std::endl;
 		assert(!open_byte_vl_as_producer(fd, &prodB, 1));
-		std::cout << "init prodB " << (void*)prodB.pcacheline << ", " << prodB.fd << std::endl;
 
 		// I can't assert on this or it short-circuits, probably UB somewhere
+		// EDIT: This ^^ may be outdated w/ newer libvl build
 		int c = open_byte_vl_as_consumer(fd, &cons, 1);
-		std::cout << "init cons " << (void*)cons.pcacheline << ", " << cons.fd << std::endl;
 	}
 
 	~VLQueue() {
@@ -55,11 +52,9 @@ public:
 	}
 
 	void pushA(const T &t) override {
-		std::cout << "pa " << (void*)prodA.pcacheline << ", " << prodA.fd << std::endl;
 		line_vl_push_strong(&prodA, (uint8_t *)&t, sizeof(T));
 	}
 	void pushB(const T &t) override {
-		std::cout << "pb " << (void*)prodB.pcacheline << ", " << prodB.fd << std::endl;
 		line_vl_push_strong(&prodB, (uint8_t *)&t, sizeof(T));
 	}
 	void pop(T &t) override {
