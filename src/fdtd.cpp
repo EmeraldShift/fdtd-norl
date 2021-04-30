@@ -29,13 +29,20 @@ int fdtd(const Configuration &cfg)
 		qex = new VLQueue<Msg>();
 		qey = new VLQueue<Msg>();
 		qez = new VLQueue<Msg>();
+	} else if (cfg.flags & FLAG_DYN) {
+		qhx = new MCQueue<Msg>();
+		qhy = new MCQueue<Msg>();
+		qhz = new MCQueue<Msg>();
+		qex = new MCQueue<Msg>();
+		qey = new MCQueue<Msg>();
+		qez = new MCQueue<Msg>();
 	} else {
-		qhx = new SWQueue<Msg>();
-		qhy = new SWQueue<Msg>();
-		qhz = new SWQueue<Msg>();
-		qex = new SWQueue<Msg>();
-		qey = new SWQueue<Msg>();
-		qez = new SWQueue<Msg>();
+		qhx = new ATQueue<Msg>();
+		qhy = new ATQueue<Msg>();
+		qhz = new ATQueue<Msg>();
+		qex = new ATQueue<Msg>();
+		qey = new ATQueue<Msg>();
+		qez = new ATQueue<Msg>();
 	}
 
 	hx.connect(qhx, qey, qez);
@@ -56,7 +63,7 @@ int fdtd(const Configuration &cfg)
 	cpu_set_t cpusets[6];
 	for (int i = 0; i < 6; i++) {
 		CPU_ZERO(&cpusets[i]);
-		CPU_SET(0, &cpusets[i]);
+		CPU_SET(i, &cpusets[i]);
 	}
 
 	switch (cfg.threads) {

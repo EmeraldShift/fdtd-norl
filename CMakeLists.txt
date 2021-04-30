@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.10)
 project(fdtd CXX)
 
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD 20)
 
 find_package(Threads)
 
@@ -15,9 +15,9 @@ if(NOGEM5)
   target_link_libraries(fdtd libvl.a)
 else()
   target_include_directories(fdtd PRIVATE "/benchmarks/VirtualLink/near-data-sim/include/")
-  target_link_libraries(fdtd /benchmarks/VirtualLink/near-data-sim/util/m5/libm5.a)
+  target_link_libraries(fdtd /usr/local/include/libm5.a) #/benchmarks/VirtualLink/near-data-sim/util/m5/libm5.a)
   target_include_directories(fdtd PRIVATE "/benchmarks/VirtualLink/libvl")
-  target_link_libraries(fdtd /benchmarks/VirtualLink/libvl/libvl/libvl.a)
+  target_link_libraries(fdtd /usr/local/lib/libvl.a) #/benchmarks/VirtualLink/libvl/libvl/libvl.a)
 endif()
 
 target_link_libraries(fdtd ${CMAKE_THREAD_LIBS_INIT})

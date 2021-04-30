@@ -13,6 +13,15 @@ struct E{};
 struct Msg {
 	elem_t val;
 	bool src; // 0 = A, 1 = B
+	bool valid = 0;
+
+	bool operator!=(Msg const &o) {
+		return o.valid;
+	}
+
+	bool operator==(Msg const &o) {
+		return !o.valid;
+	}
 };
 
 extern volatile bool global_started;

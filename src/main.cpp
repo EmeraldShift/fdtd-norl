@@ -8,6 +8,7 @@ static argp_option options[] = {
 	{"print", 'p', nullptr, 0, "Print result grid values", 0 },
 	{"threads", 'q', "#", 0, "Number of cores to distribute kernels across", 0 },
 	{"vlink", 'v', nullptr, 0, "Use VirtualLink queues", 0 },
+	{"dynamic", 'd', nullptr, 0, "Use dynamic-size queues", 0 },
 	{ nullptr },
 };
 
@@ -24,6 +25,9 @@ static error_t parse_opt(int key, char *arg, argp_state *state)
 	case 'v':
 		cfg->flags |= FLAG_VTL;
 		break;
+	case 'd':
+		  cfg->flags |= FLAG_DYN;
+		  break;
 	case 'q': {
 		if (!arg)
 			argp_usage(state);

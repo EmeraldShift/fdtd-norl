@@ -3,7 +3,8 @@
 #include "grid.hpp"
 
 constexpr unsigned long FLAG_VTL = 1;
-constexpr unsigned long FLAG_PRT = 2;
+constexpr unsigned long FLAG_DYN = 2;
+constexpr unsigned long FLAG_PRT = 4;
 
 struct Configuration {
 	unsigned long args[4]{};
